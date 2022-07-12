@@ -440,10 +440,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  jumpAmount: 1.15
-  gravity: 4.44
-  deAcceleration: 1.48
-  jump: 1
+  jumpAmount: 2
+  gravity: 1.5
+  deAcceleration: 3.5
+  jumpMode: 1
 --- !u!58 &1224519943
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -480,4 +480,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4

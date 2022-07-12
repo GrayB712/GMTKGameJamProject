@@ -124,6 +124,9 @@ public class MainCharacterScript : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //Makes a new Vector 2 for input containing the player's horizontal and vertical input
+        input = new Vector2(horizontal, vertical);
+
         //Checks if jumpmode is enabled
         if(jumpMode)
         {
@@ -136,15 +139,15 @@ public class MainCharacterScript : MonoBehaviour
             {
                 vertical = 0;
             }
-            //enacts gravity
-            if(vertical < .01f)
+            //adds gravity to the Input
+            if(vertical < .1f)
             {
                 Vector2 theGravity = new Vector2(0f, -gravity);
-                rb.MovePosition(rb.position + theGravity * Time.fixedDeltaTime);
+                input = input + theGravity;
             }
         }
-        //Makes a new Vector 2 for input containing the player's horizontal and vertical input
-        input = new Vector2(horizontal, vertical);
+        
+        
 
         //Moves the player to the new calculated position
         rb.MovePosition(rb.position + input * Time.fixedDeltaTime * speed);
