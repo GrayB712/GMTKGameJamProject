@@ -4,42 +4,51 @@ using UnityEngine;
 
 public class MainCharacterScript : MonoBehaviour
 {
+    //Rigidbody on the player
     private Rigidbody2D rb;
+
+    //Movement Speed
     public float speed = 10f;
+
+    //Horizontal Input
     private float horizontal = 0f;
+
+    //Vertical Input
     private float vertical = 0f;
+
+    //Vector2 comprised of "vertical" (vertical input) and "horizontal" (horizontal input)
     private Vector2 input;
 
+    //Height of player's jump
     public float jumpAmount = 3f;
 
+    //Gravity of player
     public float gravity = 2f;
 
+    //How quickly the player stops rising in jump
     public float deAcceleration = 1;
 
-    public bool jump = false;
+    //Whether the player can move all 4 directions or just back and forth, and can jump
+    public bool jumpMode = false;
 
+    //Float for keeping track of the gravity variable set in the inspector
     float originalGravity;
 
 
 
     void Start()
     {
+        //Stores the original value of gravity as set in the inspector
         originalGravity = gravity;
+
+        //Gets the rigidbody component from player object
         rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
-
-        if(Input.GetKey(KeyCode.S))
-        {
-            gravity = gravity * 2;
-        }else
-        {
-            gravity = originalGravity;
-        }
-
-        if(!jump)
+        //Checks if jumpmode was set in inspector -- This part is if jumpmode is off
+        if(!jumpMode)
         {
             //check for vertical input
             if(Input.GetKey(KeyCode.W))
@@ -74,8 +83,18 @@ public class MainCharacterScript : MonoBehaviour
             }
         }
 
-        if(jump)
+        //Checks if jumpmode was set in inspector -- This part is if jumpmode is on
+        if(jumpMode)
         {
+            //Speed falling with the "S" Key
+            if(Input.GetKey(KeyCode.S))
+            {
+                gravity = originalGravity * 2;
+            }else
+            {
+                gravity = originalGravity;
+            }
+
             //check for vertical input
             if(Input.GetKeyDown(KeyCode.W))
             {
@@ -105,24 +124,29 @@ public class MainCharacterScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(jump && vertical > 0)
+        //Checks if jumpmode is enabled
+        if(jumpMode)
         {
-            vertical -= Time.fixedDeltaTime * deAcceleration;
+            //Decreases the player input for jump over time
+            if(vertical > 0)
+            {
+                vertical -= Time.fixedDeltaTime * deAcceleration;
+            }
+            if(vertical<0)
+            {
+                vertical = 0;
+            }
+            //enacts gravity
+            if(vertical < .01f)
+            {
+                Vector2 theGravity = new Vector2(0f, -gravity);
+                rb.MovePosition(rb.position + theGravity * Time.fixedDeltaTime);
+            }
         }
-        if(vertical<0)
-        {
-            vertical = 0;
-        }
+        //Makes a new Vector 2 for input containing the player's horizontal and vertical input
         input = new Vector2(horizontal, vertical);
+
+        //Moves the player to the new calculated position
         rb.MovePosition(rb.position + input * Time.fixedDeltaTime * speed);
-        //Debug.Log("vertical:" + vertical + "  horizontal" + horizontal);
-
-        //Gravity
-        if(vertical < .01f)
-        {
-            Vector2 theGravity = new Vector2(0f, -gravity);
-            rb.MovePosition(rb.position + theGravity * Time.fixedDeltaTime);
-        }
-
     }
 }
