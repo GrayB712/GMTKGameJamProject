@@ -18,15 +18,26 @@ public class MainCharacterScript : MonoBehaviour
 
     public bool jump = false;
 
+    float originalGravity;
+
 
 
     void Start()
     {
+        originalGravity = gravity;
         rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
+
+        if(Input.GetKey(KeyCode.S))
+        {
+            gravity = gravity * 2;
+        }else
+        {
+            gravity = originalGravity;
+        }
 
         if(!jump)
         {
@@ -98,14 +109,20 @@ public class MainCharacterScript : MonoBehaviour
         {
             vertical -= Time.fixedDeltaTime * deAcceleration;
         }
+        if(vertical<0)
+        {
+            vertical = 0;
+        }
         input = new Vector2(horizontal, vertical);
         rb.MovePosition(rb.position + input * Time.fixedDeltaTime * speed);
         //Debug.Log("vertical:" + vertical + "  horizontal" + horizontal);
 
         //Gravity
-        if(!Input.GetKeyDown(KeyCode.S))
+        if(vertical < .01f)
         {
-            vertical = -gravity;
+            Vector2 theGravity = new Vector2(0f, -gravity);
+            rb.MovePosition(rb.position + theGravity * Time.fixedDeltaTime);
         }
+
     }
 }

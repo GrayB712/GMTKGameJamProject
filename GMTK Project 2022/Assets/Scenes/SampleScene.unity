@@ -272,7 +272,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!212 &1049042991
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -440,7 +440,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  deAcceleration: 5.91
+  jumpAmount: 1.15
+  gravity: 4.44
+  deAcceleration: 1.48
   jump: 1
 --- !u!58 &1224519943
 CircleCollider2D:
