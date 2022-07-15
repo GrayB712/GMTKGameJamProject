@@ -4,6 +4,12 @@ Cmd: initializeCompiler
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+Unhandled exception: Protocol error - failed to read magic number (error -2147483644, transferred 0/4)
+
+Quitting shader compiler process
+>>>>>>> 36a2146f65d962241c309eedf441a14f8300c507
 =======
 Unhandled exception: Protocol error - failed to read magic number (error -2147483644, transferred 0/4)
 
